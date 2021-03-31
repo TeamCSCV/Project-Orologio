@@ -6,10 +6,15 @@
 Tone tone1(8);
 
 void setup() {
-tone1.melody4();
+pinMode(6,OUTPUT);
 
 }
 
 void loop() {
-
-}
+  if (digitalRead(10)==HIGH){
+    tone1.melody5();
+  }
+  else{
+    digitalWrite(8,LOW);
+    }
+  }

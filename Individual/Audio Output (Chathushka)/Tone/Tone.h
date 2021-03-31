@@ -11,6 +11,7 @@ class Tone
         void melody2();
         void melody3();
         void melody4();
+        void melody5();
     private:
         int _pin;
 };
