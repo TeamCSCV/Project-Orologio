@@ -4,10 +4,11 @@
 
 
 
-Tone::Tone(int pin)
+Tone::Tone(int pinBuzzer,int pinButton)
 {
-    pinMode(pin,OUTPUT);
-    _pin=pin;
+    pinMode(pinBuzzer,OUTPUT);
+    _pinBuzzer=pinBuzzer;
+    _pinButton=pinButton;
 }
 
 void Tone::melody1()
@@ -77,15 +78,17 @@ int noteDurations[] = {
   
   int length = sizeof(noteDurations)/sizeof(noteDurations[0]);
   for (int currentNote=0; currentNote<length;currentNote++)
-  {
+  { 
+    if(digitalRead(_pinButton)==HIGH) {break;}
+
     int noteDuration = 750 / noteDurations[currentNote];
-    tone(_pin,melody[currentNote],noteDuration);
+    tone( _pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*1.30;
     delay (pauseBetweenNotes);
-    noTone(_pin);
+    noTone( _pinBuzzer);
   }
 
-delay(1000);
+delay(400);
 }
 
 void Tone::melody2()
@@ -177,14 +180,16 @@ int noteDurations[] = {
   int length = sizeof(noteDurations)/sizeof(noteDurations[0]);
 
   for (int currentNote=0; currentNote<length;currentNote++)
-  {
+  { 
+    if(digitalRead(_pinButton)==HIGH){break;}
+
     int noteDuration = 750 / noteDurations[currentNote];
-    tone(_pin,melody[currentNote],noteDuration);
+    tone(_pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*1.30;
     delay (pauseBetweenNotes);
-    noTone(_pin);
+    noTone(_pinBuzzer);
   }
- delay(1000);
+ delay(400);
 }
 
 void Tone::melody3()
@@ -262,11 +267,13 @@ int noteDurations[] = {
 
   for (int currentNote=0; currentNote<length;currentNote++)
   {
+    if(digitalRead(_pinButton)==HIGH){break;}
+
     int noteDuration = 2750 / noteDurations[currentNote];
-    tone(_pin,melody[currentNote],noteDuration);
+    tone(_pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*1.30;
     delay (pauseBetweenNotes);
-    noTone(_pin);
+    noTone(_pinBuzzer);
   }
  delay(1000);
 }
@@ -287,16 +294,18 @@ int noteDurations[] = {
   while (i<10){
   for (int currentNote=0; currentNote<length;currentNote++)
   {
+    if(digitalRead(_pinButton)==HIGH){break;}
+
     int noteDuration = 250 / noteDurations[currentNote];
-    tone(_pin,melody[currentNote],noteDuration);
+    tone(_pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*2;
     delay (pauseBetweenNotes);
-    noTone(_pin);
+    noTone(_pinBuzzer);
   }
   i++;
   }
 
-delay(1000);
+delay(400);
 }
 
 
@@ -357,12 +366,35 @@ int noteDurations[] = {
 
   for (int currentNote=0; currentNote<length;currentNote++)
   {
+    if(digitalRead(_pinButton)==HIGH){break;}
+    
     int noteDuration = 750*3 / noteDurations[currentNote];
-    tone(_pin,melody[currentNote],noteDuration);
+    tone(_pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*1.30;
     delay (pauseBetweenNotes);
-    noTone(_pin);
+    noTone(_pinBuzzer);
   }
 
-delay(1000);
+delay(400);
+}
+
+void Tone::play(int number){
+
+switch (number) {
+  case 1:
+    melody1();
+    break;
+  case 2:
+    melody2();
+    break;
+  case 3:
+    melody3();
+    break;
+  case 4:
+    melody4();
+    break;
+  case 5:
+    melody5();
+    break;
+}
 }

@@ -3,18 +3,25 @@
 
 
 
-Tone tone1(8);
+Tone alarmTone(8,4);
+
+int i=1;
 
 void setup() {
-pinMode(6,OUTPUT);
+  i=1;
+  delay(500);
 
 }
 
 void loop() {
-  if (digitalRead(10)==HIGH){
-    tone1.melody5();
-  }
-  else{
-    digitalWrite(8,LOW);
-    }
+
+  alarmTone.play(i);
+  i++;
+  delay(500);
+    
+  if(i>5){i=1;}
+    
+    
+    
+    
   }
