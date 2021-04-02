@@ -25,7 +25,11 @@ int keyInput() {
         digitalWrite(columns[c],HIGH); // set the column pins to HIGH initially 
         if ((digitalRead(columns[c])==0) and (digitalRead(rows[r])==0)) { // while the current row pin is LOW check whether if any column pin is LOW
           int pressed=keys[r][c]; // obtain the pressed key
-          return pressed;} // return the pressed key
+          if (pressed!=42 and pressed!=35){ // if a number is pressed
+            return pressed;} // return the pressed key
+          else{ // if '*' or '#' is pressed
+            return 100;}
+          } 
         }
       digitalWrite(rows[r],HIGH); // set the current pin again to HIGH
       }    
