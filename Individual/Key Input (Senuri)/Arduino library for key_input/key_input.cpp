@@ -1,20 +1,21 @@
-int R1=3,R2=4,R3=5,R4=6,C1=7,C2=8,C3=9;
-int rows[]={R1,R2,R3,R4};
-int columns[]={C1,C2,C3};
-int keys[4][3]={{1,2,3},{4,5,6},{7,8,9},{'*',0,'#'}};
-void setup() {
-  // put your setup code here, to run once:
-  pinMode (R1,OUTPUT);pinMode (R2,OUTPUT);pinMode (R3,OUTPUT);pinMode (R4,OUTPUT); // rows  
-  pinMode (C1,INPUT);pinMode (C2,INPUT);pinMode (C3,INPUT); // columns
-  pinMode(10,OUTPUT);pinMode(11,OUTPUT);pinMode(12,OUTPUT);pinMode(13,OUTPUT); //LEDs
+#include "Arduino.h"
+#include "key_input.h"
 
+key_input::key_input(int pin)
+{
+  for (int _pin=pin;_pin<=6; _pin++)
+    pinMode(_pin, OUTPUT);
+  for (int _pin=pin+4; _pin<=9; _pin++)
+    pinMode(_pin, INPUT);
+  for (int _pin=pin+7; _pin<=13;_pin++)
+    pinMode(_pin, OUTPUT);
 }
-void loop() {
-  // put your main code here, to run repeatedly:
-  led(); //calling the led function repeatedly 
-}
-int keyInput() {
-    //Scanning the keypad repeatedly to check whether a key is pressed
+
+int key_input::keyInput() {
+    int rows[4]={3,4,5,6};
+    int columns[3]={7,8,9};
+    int keys[4][3]={{1,2,3},{4,5,6},{7,8,9},{'*',0,'#'}};
+    
     for (int r=0; r<=3; r++){ // set all row pins to HIGH
       digitalWrite(rows[r],HIGH);
     }
