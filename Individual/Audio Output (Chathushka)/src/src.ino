@@ -1,9 +1,7 @@
 #include <Notes.h>
 #include <Tone.h>
 
-
-
-Tone alarmTone(8,4);
+Tone alarmTone(5,6);
 
 int i=1;
 
@@ -20,8 +18,6 @@ void loop() {
   delay(500);
     
   if(i>5){i=1;}
-    
-    
-    
-    
+  
   }
+   
