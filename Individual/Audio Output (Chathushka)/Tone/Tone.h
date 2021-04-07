@@ -1,3 +1,8 @@
+/*
+  Tone.cpp - Library to Store the data of five alarm tones.
+  Created by Chathushka Ranasinghe, April 7, 2020. 
+*/
+
 #ifndef Tone_h
 #define Tone_h
 

@@ -1,3 +1,15 @@
+/*
+  Tone.cpp - Library to Store the data of five alarm tones.
+  Created by Chathushka Ranasinghe, April 7, 2020.
+  These are the melodies have been included.
+  1 - A Normal Digial Tone
+  2 - Astronomia
+  3 - Pirates of the carribean Theme
+  4 - Game of Thrones Theme
+  5 - Sherlock Theme
+*/
+
+
 #include "Arduino.h"
 #include "Tone.h"
 #include "Notes.h"
