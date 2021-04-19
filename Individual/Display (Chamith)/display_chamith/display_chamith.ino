@@ -5,7 +5,7 @@ int back_button = 7;
 int down_button = 8;
 int up_button = 9;  //declare my buttons
 
-int state = 0;  //the time displaying mode
+int state = 0;  //the time displaying mode(initial state)
 
 Display display(select_button, back_button, down_button, up_button, state);   //providing data to my class
  
