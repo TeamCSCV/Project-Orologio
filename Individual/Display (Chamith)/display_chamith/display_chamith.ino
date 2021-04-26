@@ -1,13 +1,15 @@
-#include <Display.h>  // include the my library
+#include <Display.h>  // include my library
 
-int select_button = 6;
-int back_button = 7;
+int select_button = 13;
+int back_button = 10;
 int down_button = 8;
-int up_button = 9;  //declare my buttons
-
+int up_button = 9;  
+int right_button = 7;
+int left_button = 6;    //declare my buttons
+ 
 int state = 0;  //the time displaying mode(initial state)
 
-Display display(select_button, back_button, down_button, up_button, state);   //providing data to my class
+Display display(select_button, back_button, down_button, up_button, right_button, left_button, state);   //providing data to my class
  
 
 void setup() {
@@ -33,5 +35,15 @@ void loop() {
   int up_state = digitalRead(up_button);
   if (up_state == HIGH){       //user press the up button
     display.up();
+  }
+
+  int right_state = digitalRead(right_button);
+  if (right_state == HIGH){
+    display.right();
+  }
+
+  int left_state = digitalRead(left_button);
+  if (left_state == HIGH){
+    display.left();
   }
 }
