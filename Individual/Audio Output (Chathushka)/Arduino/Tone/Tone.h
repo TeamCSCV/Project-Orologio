@@ -6,10 +6,12 @@
 #ifndef Tone_h
 #define Tone_h
 
+#include "Arduino.h"
+
 class Tone
 {
     public:
-        Tone();
+        Tone(int pinBuzzer,int pinButton);
         void melody1();
         void melody2();
         void melody3();

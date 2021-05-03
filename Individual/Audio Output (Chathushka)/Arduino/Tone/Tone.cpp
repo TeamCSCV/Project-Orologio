@@ -8,53 +8,20 @@
   4 - Game of Thrones Theme
   5 - Sherlock Theme
 */
-#include <avr/io.h>
-#include <util/delay.h>
-#define SPEAKER_PORT PORTB
-#define SPEAKER_DDR DDRB
-#define SPEAKER_PIN 3
+
+
+#include "Arduino.h"
 #include "Tone.h"
 #include "Notes.h"
 
 int changing;
 
-Tone::Tone()
+Tone::Tone(int pinBuzzer,int pinButton)
 {
-
+    pinMode(pinBuzzer,OUTPUT);
+    _pinBuzzer=pinBuzzer;
+    _pinButton=pinButton;
 }
-
-
-
-void delay_ms(uint16_t count) {
-	while(count) {
-		_delay_ms(1);
-		count--;
-	}
-}
-
-}
-
-void Tone::playNote( float frequency, float duration,)
-{
-	
-	  float wavelength=(1/frequency)*1000;
-	  long int cycles=2*duration/wavelength;
-      float half_period = wavelength/2;
-
-	SPEAKER_DDR |= (1 << SPEAKER_PIN);
-	
-	for (int i=0;i<cycles;i++)
-	{
-		delay_ms(half_period);
-		SPEAKER_PORT |= (1 << SPEAKER_PIN);
-		delay_ms(half_period);
-		SPEAKER_PORT &= ~(1 << SPEAKER_PIN);
-	}
-
-	return;
-	
-}
-
 
 void Tone::melody1()
 {
@@ -74,20 +41,19 @@ int noteDurations[] = {
     
   for (int currentNote=0; currentNote<length;currentNote++)
   { 
-    int PIN_BUTTON  = PINB & (1<<2)
-    if( PIN_BUTTON) {changing=1;break;}
+    if(digitalRead(_pinButton)==HIGH) {changing=1;break;}
 
 
     int noteDuration = 250 / noteDurations[currentNote];
-    playNote(_pinBuzzer,melody[currentNote],noteDuration);
+    tone(_pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*2;
-    _delay_ms (pauseBetweenNotes);
-    SPEAKER_PORT=0;
+    delay (pauseBetweenNotes);
+    noTone(_pinBuzzer);
   }
 
   }
 
-_delay_ms(400);
+delay(400);
 }
 
 
@@ -158,16 +124,15 @@ int noteDurations[] = {
   
   for (int currentNote=0; currentNote<length;currentNote++)
   { 
-    int PIN_BUTTON  = PINB & (1<<2)
-    if( PIN_BUTTON) {changing=1;break;}
+    if(digitalRead(_pinButton)==HIGH) {changing=1;break;}
 
     int noteDuration = 750 / noteDurations[currentNote];
-    playNote(melody[currentNote],noteDuration);
+    tone( _pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*1.30;
-    _delay_ms (pauseBetweenNotes);
-    SPEAKER_PORT=0;
+    delay (pauseBetweenNotes);
+    noTone( _pinBuzzer);
   }
-_delay_ms(400);
+delay(400);
  
 }
 
@@ -223,16 +188,15 @@ int noteDurations[] = {
   {
   for (int currentNote=0; currentNote<length;currentNote++)
   { 
-    int PIN_BUTTON  = PINB & (1<<2)
-    if( PIN_BUTTON) {changing=1;break;}
+    if(digitalRead(_pinButton)==HIGH){changing=1;break;}
 
     int noteDuration = 750 / noteDurations[currentNote];
-    playNote(melody[currentNote],noteDuration);
+    tone(_pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*1.30;
-    _delay_ms (pauseBetweenNotes);
-    SPEAKER_PORT=0;
+    delay (pauseBetweenNotes);
+    noTone(_pinBuzzer);
   }
- _delay_ms(400);
+ delay(400);
   }
 } 
 
@@ -304,17 +268,16 @@ int noteDurations[] = {
   
   for (int currentNote=0; currentNote<length;currentNote++)
   { 
-    int PIN_BUTTON  = PINB & (1<<2)
-    if( PIN_BUTTON) {changing=1;break;}
+    if(digitalRead(_pinButton)==HIGH) {changing=1;break;}
 
 
     int noteDuration = 2750 / noteDurations[currentNote];
-    playNote(melody[currentNote],noteDuration);
+    tone(_pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*1.30;
-    _delay_ms (pauseBetweenNotes);
-    SPEAKER_PORT=0;
+    delay (pauseBetweenNotes);
+    noTone(_pinBuzzer);
   }
- _delay_ms(1000);
+ delay(1000);
   }
 }
 
@@ -376,21 +339,20 @@ int noteDurations[] = {
   
   for (int currentNote=0; currentNote<length;currentNote++)
   { 
-    int PIN_BUTTON  = PINB & (1<<2)
-    if( PIN_BUTTON) {changing=1;break;}
+    if(digitalRead(_pinButton)==HIGH) {changing=1;break;}
 
   for (int currentNote=0; currentNote<length;currentNote++)
   {
     if(digitalRead(_pinButton)==HIGH){break;}
     
     int noteDuration = 750*3 / noteDurations[currentNote];
-    playNote(melody[currentNote],noteDuration);
+    tone(_pinBuzzer,melody[currentNote],noteDuration);
     int pauseBetweenNotes= noteDuration*1.30;
-    _delay_ms (pauseBetweenNotes);
-    SPEAKER_PORT=0;
+    delay (pauseBetweenNotes);
+    noTone(_pinBuzzer);
   }
 }
-_delay_ms(400);
+delay(400);
   }
 }
 
