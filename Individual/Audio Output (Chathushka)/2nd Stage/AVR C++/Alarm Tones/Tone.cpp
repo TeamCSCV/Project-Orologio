@@ -10,50 +10,58 @@
 */
 
 #define __DELAY_BACKWARD_COMPATIBLE__
+#define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
 #define SPEAKER_PORT PORTB
 #define SPEAKER_DDR DDRB
-#define SPEAKER_PIN 2
 #define BUTTON_PIN 1
 #include "Tone.h"
 #include "Notes.h"
 
 int changing;
 
+Tone::Tone(int pin)
+{
+	SPEAKER_PIN=pin;
+}
 
-void playNote(float frequency, float duration)
-{	
-  duration*=500;
+void Tone:: playNote(float frequency, float duration)
+{
+	duration*=0.5;
 	long int cycles;
 	float half_period;
 	float wavelength;
 	
-  SPEAKER_DDR |= (1 << SPEAKER_PIN);
+	SPEAKER_DDR |= (1 << SPEAKER_PIN);
 	if (frequency==0){
 		SPEAKER_PORT &= ~(1 << SPEAKER_PIN);
 		_delay_us(duration);
+		float pauseBetweenNotes= duration*2;
+			_delay_ms (pauseBetweenNotes);
 	}
 	
 	
 	else{
-	wavelength=(1/frequency)*1000;
-	cycles=2*duration/wavelength;
-	half_period = wavelength/2;
+		wavelength=(1/frequency)*1000;
+		cycles=2*duration/wavelength;
+		half_period = wavelength/2;
 
-	
-	
-	for (int i=0;i<cycles;i++)
-	{
-		_delay_us(half_period*1000);
-		SPEAKER_PORT |= (1 << SPEAKER_PIN);
-		_delay_us(half_period*1000);
-		SPEAKER_PORT &= ~(1 << SPEAKER_PIN);
-	}
+		
+		
+		for (int i=0;i<cycles;i++)
+		{
+			_delay_us(half_period*1000);
+			SPEAKER_PORT |= (1 << SPEAKER_PIN);
+			_delay_us(half_period*1000);
+			SPEAKER_PORT &= ~(1 << SPEAKER_PIN);
 		}
+	}
 }
 
-void melody1()
+
+
+void Tone::melody1()
 {
 	int melody[] = {
 		NOTE_G5,NOTE_G5,NOTE_G5,NOTE_G5,0
@@ -87,7 +95,7 @@ void melody1()
 }
 
 
-void melody2()
+void Tone:: melody2()
 {
 	
 	int melody[] = {
@@ -155,7 +163,7 @@ void melody2()
 		for (int currentNote=0; currentNote<length;currentNote++)
 		{
 			int wantChange  = PINB & (1<<BUTTON_PIN);
-			if( wantChange) {changing=1;break;}
+			if( wantChange) {changing=1;_delay_ms(100);break;}
 
 			float noteDuration = 375 / noteDurations[currentNote];
 			playNote(melody[currentNote],noteDuration);
@@ -169,7 +177,7 @@ void melody2()
 
 }
 
-void melody3()
+void Tone:: melody3()
 {
 	int melody[] = {
 		
@@ -220,7 +228,7 @@ void melody3()
 		for (int currentNote=0; currentNote<length;currentNote++)
 		{
 			int wantChange  = PINB & (1<<BUTTON_PIN);
-			if( wantChange) {changing=1;break;}
+			if( wantChange) {changing=1;_delay_ms(100);break;}
 
 			float noteDuration = 375 / noteDurations[currentNote];
 			playNote(melody[currentNote],noteDuration);
@@ -232,7 +240,7 @@ void melody3()
 	}
 }
 
-void melody4()
+void Tone:: melody4()
 {
 	int melody[] = {
 		NOTE_G4,
@@ -301,7 +309,7 @@ void melody4()
 		for (int currentNote=0; currentNote<length;currentNote++)
 		{
 			int wantChange  = PINB & (1<<BUTTON_PIN);
-			if( wantChange) {changing=1;break;}
+			if( wantChange) {changing=1;_delay_ms(100);break;}
 
 
 			float noteDuration = 1375 / noteDurations[currentNote];
@@ -315,7 +323,7 @@ void melody4()
 }
 
 
-void melody5()
+void Tone:: melody5()
 {
 	int melody[] = {
 		NOTE_C4,NOTE_G4,
@@ -369,16 +377,10 @@ void melody5()
 	changing=0;
 	while (changing==0)
 	{
-		
-		for (int currentNote=0; currentNote<length;currentNote++)
-		{
-			int wantChange  = PINB & (1<<BUTTON_PIN);
-			if( wantChange) {changing=1;break;}
-
 			for (int currentNote=0; currentNote<length;currentNote++)
 			{
 				int wantChange  = PINB & (1<<BUTTON_PIN);
-				if( wantChange) {changing=1;break;}
+				if( wantChange) {changing=1;_delay_ms(100);break;}
 
 				
 				float noteDuration = 375*3 / noteDurations[currentNote];
@@ -387,29 +389,29 @@ void melody5()
 				_delay_ms (pauseBetweenNotes);
 				SPEAKER_PORT=0;
 			}
-		}
+			
 		_delay_ms(400);
 	}
 }
 
-void playMelody(int number){
+void Tone:: playMelody(int number){
 
-switch (number) {
-  case 1:
-    melody1();
-    break;
-  case 2:
-    melody2();
-    break;
-  case 3:
-    melody3();
-    break;
-  case 4:
-    melody4();
-    break;
-  case 5:
-    melody5();
-    break;
-}
+	switch (number) {
+		case 1:
+		melody1();
+		break;
+		case 2:
+		melody2();
+		break;
+		case 3:
+		melody3();
+		break;
+		case 4:
+		melody4();
+		break;
+		case 5:
+		melody5();
+		break;
+	}
 
 }
