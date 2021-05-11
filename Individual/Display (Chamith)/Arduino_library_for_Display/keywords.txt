@@ -1,0 +1,7 @@
+Display KEYWORD1
+select  KEYWORD2
+back    KEYWORD2
+down    KEYWORD2
+up  KEYWORD2
+start   KEYWORD2
+time	KEYWORD2
