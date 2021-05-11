@@ -1,0 +1,63 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\Chathushka\Desktop\LAB_ALTIUM\Audio_Output\PCB1.PcbDoc
+Date     : 5/12/2021
+Time     : 4:09:33 AM
+
+Processing Rule : Clearance Constraint (Gap=10mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+Rule Violations :0
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=10mil) (Max=100mil) (Preferred=20mil) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=1mil) (Max=100mil) (All)
+Rule Violations :0
+
+Processing Rule : Hole To Hole Clearance (Gap=10mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=10mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=10mil) (IsPad),(All)
+Rule Violations :0
+
+Processing Rule : Silk to Silk (Clearance=10mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mil) (All)
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (All)
+Rule Violations :0
+
+Waived Violations Of Rule : Clearance Constraint (Gap=10mil) (All),(All)
+   Waived Violation between Clearance Constraint: (9.842mil < 10mil) Between Pad J-1(1342.284mil,1821.182mil) on Multi-Layer And Pad J-2(1342.284mil,1870.394mil) on Multi-Layer Waived by Chathushka Ranasinghe at 5/12/2021 3:35:31 AM
+Waived Violations :1
+
+Waived Violations Of Rule : Hole Size Constraint (Min=1mil) (Max=100mil) (All)
+   Waived Violation between Hole Size Constraint: (157.48mil > 100mil) Pad Free-MH1(5955mil,3205mil) on Multi-Layer Actual Hole Size = 157.48milWaived by Chathushka Ranasinghe at 5/12/2021 3:45:36 AM
+   Waived Violation between Hole Size Constraint: (157.48mil > 100mil) Pad Free-MH2(1145mil,1145mil) on Multi-Layer Actual Hole Size = 157.48milWaived by Chathushka Ranasinghe at 5/12/2021 3:45:32 AM
+   Waived Violation between Hole Size Constraint: (157.48mil > 100mil) Pad Free-MH2(1145mil,3205mil) on Multi-Layer Actual Hole Size = 157.48milWaived by Chathushka Ranasinghe at 5/12/2021 3:45:40 AM
+   Waived Violation between Hole Size Constraint: (157.48mil > 100mil) Pad Free-MH4(5980mil,1145mil) on Multi-Layer Actual Hole Size = 157.48milWaived by Chathushka Ranasinghe at 5/12/2021 3:45:24 AM
+Waived Violations :4
+
+Waived Violations Of Rule : Minimum Solder Mask Sliver (Gap=10mil) (All),(All)
+   Waived Violation between Minimum Solder Mask Sliver Constraint: (9.842mil < 10mil) Between Pad J-1(1342.284mil,1821.182mil) on Multi-Layer And Pad J-2(1342.284mil,1870.394mil) on Multi-Layer [Top Solder] Mask Sliver [9.842mil] / [Bottom Solder] Mask Sliver [9.842mil]Waived by Chathushka Ranasinghe at 5/12/2021 3:42:29 AM
+Waived Violations :1
+
+
+Violations Detected : 0
+Waived Violations : 6
+Time Elapsed        : 00:00:00
