@@ -43,23 +43,13 @@ void loop() {
     
   }
   if(mode==0){
-    Serial.println("Display Time");
     DisplayTime();
-    Serial.println();
   }
   if(mode==1){
-    Serial.println();
-    Serial.println("Setting Alarm Hours");
     SetAlarmHours();
-    Serial.print(AlarmHours);
-    Serial.println();
   }
   if(mode==2){
-    Serial.println();
-    Serial.println("Setting Alarm minutes");
     SetAlarmMin();
-    Serial.print(AlarmMin);
-    Serial.println();
   }
   if(mode==3){
     Serial.print("Alarm time is set to : ");
