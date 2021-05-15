@@ -23,10 +23,22 @@
 #define LED_PORT PORTC
 #define LED_DDR   DDRC
 #define LED_PIN   PINC
+/*
+Rows          Columns
+R1 >> PD0     C1 >> PD4
+R2 >> PD1     C2 >> PD5
+R3 >> PD2     C3 >> PD6
+R4 >> PD3
 
+LEDs
+LED1 (2^3) >> PC0
+LED2 (2^2) >> PC1
+LED3 (2^1) >> PC2
+LED4 (2^0) >> PC3
+ */
 char keyInput();
 void Led();
 
-//char keys[3][4]={{'#','9','6','3'},{'0','8','5','2'},{'*','7','4','1'}};
+
 
 #endif /* KEY_PAD_H_ */

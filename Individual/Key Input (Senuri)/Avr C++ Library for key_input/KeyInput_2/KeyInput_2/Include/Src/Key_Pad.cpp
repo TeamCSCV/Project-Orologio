@@ -12,9 +12,10 @@ unsigned char keys[4][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'},{'*','0','#'
 //Scanning the keypad repeatedly to check whether a key is pressed
 char keyInput(){
 	
-	KEY_DDR |= 0b00001111 ; //set the row pins to OUTPUT
 	KEY_PORT |= 0b00001111; //set all row pins to HIGH
 	for (int r=0; r<=3; r++){
+		KEY_DDR &= ~0b01111111;
+		KEY_DDR |= 0b00000001 << r ;
 		KEY_PORT &= ~(0b00000001 << r); // set the current row pin to LOW
 		for (int c=0; c<=2; c++){
 			KEY_PORT |= (0b00010000 << c);
