@@ -12,11 +12,11 @@
 #define F_CPU 8000000UL
 
 //using namespace std;
-//KEYPAD IS ATTACHED ON PORTB
+//KEYPAD IS ATTACHED ON PORTD
 
-#define KEY_PORT PORTB
-#define KEY_DDR   DDRB
-#define KEY_PIN   PINB
+#define KEY_PORT PORTD
+#define KEY_DDR   DDRD
+#define KEY_PIN   PIND
 
 //LEDs ARE ATTACHED ON PORTC
 
