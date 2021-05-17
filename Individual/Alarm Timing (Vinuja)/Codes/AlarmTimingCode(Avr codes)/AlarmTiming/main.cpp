@@ -1,290 +1,105 @@
+#include <avr/io.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
-
-#ifndef F_CPU
-#define F_CPU 8000000UL
-#endif
 #include "ds1307.h"
+#include "Settings.h"
+#include "util/delay.h"
 
 int mode = 0;
-int select=0;
-int AlarmOneMin=0;
-int AlarmOneHour=0;
-int AlarmTwoMin=0;
-int AlarmTwoHour=0;
-int AlarmThreeMin=0;
-int AlarmThreeHour=0;
-int year=21;
-int month=0;
-int date=0;
+int data = 0;
+int AlarmState = 3;
+int ClockState = 0;
+int temp = 0;
+int alarmTime = 0;
+int clockTime[6];
 
 void LED(char P){
 	PORTB|=1<<P;
-	_delay_ms(1000);
+	_delay_ms(500);
 	PORTB&=~(1<<P);
-	_delay_ms(1000);
+	_delay_ms(500);
 }
-void setDay(){
-}
-void setAlarmOne(){
-	
-}
-void setAlarmTwo(){
-	
-}
-void setAlarmThree(){
-
-}
-
-void setYear(){
-	//LED(PORTB0);
-	if((PIND & (1<<PIND5))){
-		LED(PORTB3);
-		year++;
-	}
-}
-
-void setMonth(){
-	//LED(PORTB0);
-	if((PIND & (1<<PIND5))){
-		LED(PORTB4);
-		if(month==12){
-			month=1;
+void getAlarmTime(){
+	if (btnPress(PIND1)){
+		if(data==9){
+			data=0;
+			_delay_ms(500);
 		}else{
-			month++;
-		}		
-	}
-}
-void setDate(){
-	if((PIND & (1<<PIND5))){
-		if(date==31){
-			date=1;
-		}else{
-			date++;
-		}
-			
-	}
-	
-}
-
-
-void setAlarmOneHour(){
-	if((PIND & (1<<PIND5))){
-		LED(PORTB5);
-		if(AlarmOneHour==23){
-			AlarmOneHour=0;
-		}else{
-			AlarmOneHour++;
-			
-		}
-	}
-}
-
-void setAlarmOneMin(){
-	if((PIND & (1<<PIND5))){
-		LED(PORTB5);
-		if(AlarmOneMin==59){
-			AlarmOneMin=0;
-		}else{
-			AlarmOneMin++;
-			
-		}
-	}
-}
-
-void setAlarmTwoHour(){
-	if((PIND & (1<<PIND5))){
-		LED(PORTB5);
-		if(AlarmTwoHour==23){
-			AlarmTwoHour=0;
-			}else{
-			AlarmTwoHour++;
-			
-		}
-	}
-}
-
-void setAlarmTwoMin(){
-	if((PIND & (1<<PIND5))){
-		LED(PORTB5);
-		if(AlarmTwoMin==59){
-			AlarmTwoMin=0;
-			}else{
-			AlarmTwoMin++;
-			
-		}
-	}
-}
-
-void setAlarmThreeHour(){
-	if((PIND & (1<<PIND5))){
-		LED(PORTB5);
-		if(AlarmThreeHour==23){
-			AlarmThreeHour=0;
-			}else{
-			AlarmThreeHour++;
-			
-		}
-	}
-}
-
-void setAlarmThreeMin(){
-	if((PIND & (1<<PIND5))){
-		LED(PORTB5);
-		if(AlarmThreeMin==59){
-			AlarmThreeMin=0;
-			}else{
-			AlarmThreeMin++;
-			
-		}
-	}
-}
-int main(void) {
-	DDRB=0b01111111;
-	DDRD=0b00000000;
-	ds1307_init();
-	
-	uint8_t year = 0;
-	uint8_t month = 0;
-	uint8_t day = 0;
-	uint8_t hour = 0;
-	uint8_t minute = 0;
-	uint8_t second = 0;
-	//check set date
-	//ds1307_setdate(21, 12, 31, 23, 59, 35);
-	
-	while(1) {
-		//get date
-		ds1307_getdate(&year, &month, &day, &hour, &minute, &second);
-		//blinking alarmLED
-		if(AlarmOneHour==2){
-			LED(PORTB0);
-			
-		}else{
-			PORTB&=~(1<<PORTB0);
+			LED(PORTB1);
+			data++;
+			_delay_ms(500);	
 		}
 		
-		//changing the mode
-		if(PIND & (1<<PIND7)){
-			if(mode==4){
+	}
+	if (btnPress(PIND3)){
+		LED(PORTB2);
+		alarmTime += data*powerOf(10,AlarmState);
+		AlarmState--;
+		data=0;
+		_delay_ms(500);
+	}
+	if (AlarmState == -1){
+		setAlarm(alarmTime);
+		AlarmState = 3;
+		alarmTime = 0;
+		mode = 0;
+		_delay_ms(500);
+	}
+}
+void getClockTime(){
+	if (btnPress(PIND1)){
+		if(data==9){
+			data=0;
+			_delay_ms(500);
+			}else{
+			LED(PORTB1);
+			data++;
+			_delay_ms(500);
+		}
+		
+	}
+	if (btnPress(PIND3)){
+		LED(PORTB2);
+		if (temp == 0){
+			data*=10;
+			temp = 1;
+		}
+		else{
+			clockTime[ClockState] = data;
+			ClockState++;
+			data=0;
+			temp = 0;
+		}
+		_delay_ms(500);
+	}
+	if (ClockState == 6){
+		setClockTime(clockTime);
+		ClockState = 0;
+		mode = 0;
+		_delay_ms(500);
+	}
+}
+int main(void)
+{
+	ds1307_init();
+	while (1)
+	{
+		checkAlarm();
+		if (btnPress(PIND7)){
+			if(mode==2){
 				mode=0;
+				_delay_ms(500);
 			}else{
 				mode++;
-				LED(PORTB1);
+				LED(PORTB3);
+				_delay_ms(500);
 			}
 		}
-		
-		//setting mode to functions
-		if(mode==0){
-			//LED(PORTB1);
+		if (mode == 1){
+			getAlarmTime();
 		}
-		//Changing the year,month,date
-		else if(mode==1){
-			//LED(PORTB2);
-			if((PIND & (1<<PIND3))){
-				//LED(PORTB3);
-				if(select==3){
-					select=0;
-				}else{
-					select++;
-					LED(PORTB2);
-				}
-			}
-			
-			if(select==0){
-				//LED(PORTB4);
-			}
-			else if(select==1){
-				//LED(PORTB2);
-				setYear();
-			}
-			else if(select==2){
-				//LED(PORTB3);
-				setMonth();
-				
-			}else{
-				//LED(PORTB5);
-				setDate();
-			}
-		
+		if (mode == 2){
+			getClockTime();
 		}
-		if(mode==2){
-			//LED(PORTB3);
-			if((PIND & (1<<PIND3))){
-				//LED(PORTB3);
-				if(select==2){
-					select=0;
-				}else{
-					select++;
-					LED(PORTB2);
-				}
-			}
-			if(select==0){
-				//LED(PORTB4);
-			}
-			else if(select==1){
-				//LED(PORTB4);
-				setAlarmOneHour();
-			}
-			else if(select==2){
-				//LED(PORTB3);
-				setAlarmOneMin();
-				
-				}
-		}
-		else if(mode==3){
-			//LED(PORTB5);
-			if((PIND & (1<<PIND3))){
-				//LED(PORTB3);
-				if(select==2){
-					select=0;
-					}else{
-					select++;
-					LED(PORTB2);
-				}
-			}
-			if(select==0){
-				//LED(PORTB4);
-			}
-			else if(select==1){
-				//LED(PORTB4);
-				setAlarmTwoHour();
-			}
-			else if(select==2){
-				//LED(PORTB3);
-				setAlarmTwoMin();
-				
-			}
-		}else{
-			//LED(PORTB5);
-			if((PIND & (1<<PIND3))){
-				//LED(PORTB3);
-				if(select==2){
-					select=0;
-					}else{
-					select++;
-					LED(PORTB2);
-				}
-			}
-			if(select==0){
-				//LED(PORTB4);
-			}
-			else if(select==1){
-				//LED(PORTB4);
-				setAlarmThreeHour();
-			}
-			else if(select==2){
-				//LED(PORTB3);
-				setAlarmThreeMin();
-				
-			}
-		}
-		
-			
-		
 	}
 }
-
