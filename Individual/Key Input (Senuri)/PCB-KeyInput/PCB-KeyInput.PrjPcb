@@ -78,6 +78,10 @@ DocumentUniqueId=XBGTGREO
 DocumentPath=Project Outputs for PCB-KeyInput\Design Rule Check - keyInput.html
 DItemRevisionGUID=
 
+[Parameter1]
+Name=Title
+Value=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
