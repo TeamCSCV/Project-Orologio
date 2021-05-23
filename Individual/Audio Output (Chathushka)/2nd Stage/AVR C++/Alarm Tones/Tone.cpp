@@ -1,30 +1,33 @@
 /*
   Tone.cpp - Library to Store the data of five alarm tones.
-  Created by Chathushka Ranasinghe, April 7, 2020.
+  Created by Chathushka Ranasinghe, May 8, 2021.
   These are the melodies have been included.
-  1 - A Normal Digial Tone
+  1 - A Normal Digial Alarm  Tone
   2 - Astronomia
-  3 - Pirates of the carribean Theme
+  3 - Pirates of the Carribean Theme
   4 - Game of Thrones Theme
   5 - Sherlock Theme
 */
 
 #define __DELAY_BACKWARD_COMPATIBLE__
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 #include <avr/io.h>
 #include <util/delay.h>
 #define SPEAKER_PORT PORTB
 #define SPEAKER_DDR DDRB
-#define BUTTON_PIN 1
+
 #include "Tone.h"
 #include "Notes.h"
 
 int changing;
 
-Tone::Tone(int pin)
+Tone::Tone(int pin_1,int pin_2)
 {
-	SPEAKER_PIN=pin;
+	SPEAKER_PIN=pin_1;
+	BUTTON_PIN =pin_2;
 }
+
+//Function to play a single note
 
 void Tone:: playNote(float frequency, float duration)
 {
@@ -59,7 +62,7 @@ void Tone:: playNote(float frequency, float duration)
 	}
 }
 
-
+//Notes and their durations.
 
 void Tone::melody1()
 {
