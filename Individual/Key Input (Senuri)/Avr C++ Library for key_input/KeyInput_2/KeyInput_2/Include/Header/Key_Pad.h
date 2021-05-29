@@ -9,9 +9,8 @@
 #ifndef KEY_PAD_H_
 #define KEY_PAD_H_
 #include <avr/io.h>
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 
-//using namespace std;
 //KEYPAD IS ATTACHED ON PORTD
 
 #define KEY_PORT PORTD

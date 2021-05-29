@@ -6,7 +6,7 @@
  */ 
 
 #include <avr/io.h>
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 #include "Key_Pad.h"
 	
  int main(void)

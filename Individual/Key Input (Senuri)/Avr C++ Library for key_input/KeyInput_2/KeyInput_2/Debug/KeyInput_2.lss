@@ -21,11 +21,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_frame  00000068  00000000  00000000  00001578  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000493  00000000  00000000  000015e0  2**0
+  9 .debug_str    00000424  00000000  00000000  000015e0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000014c  00000000  00000000  00001a73  2**0
+ 10 .debug_loc    0000014c  00000000  00000000  00001a04  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000028  00000000  00000000  00001bbf  2**0
+ 11 .debug_ranges 00000028  00000000  00000000  00001b50  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -91,9 +91,9 @@ Disassembly of section .text:
 char keyInput(){
 	
 	KEY_PORT |= 0b00001111; //set all row pins to HIGH
-  96:	85 b1       	in	r24, 0x05	; 5
+  96:	8b b1       	in	r24, 0x0b	; 11
   98:	8f 60       	ori	r24, 0x0F	; 15
-  9a:	85 b9       	out	0x05, r24	; 5
+  9a:	8b b9       	out	0x0b, r24	; 11
 	for (int r=0; r<=3; r++){
   9c:	60 e0       	ldi	r22, 0x00	; 0
   9e:	70 e0       	ldi	r23, 0x00	; 0
@@ -101,12 +101,12 @@ char keyInput(){
   a2:	71 05       	cpc	r23, r1
   a4:	0c f0       	brlt	.+2      	; 0xa8 <_Z8keyInputv+0x12>
   a6:	48 c0       	rjmp	.+144    	; 0x138 <_Z8keyInputv+0xa2>
-		KEY_DDR &= ~0b01111111;
-  a8:	84 b1       	in	r24, 0x04	; 4
+		KEY_DDR &= ~0b01111111; // clear previous bit values
+  a8:	8a b1       	in	r24, 0x0a	; 10
   aa:	80 78       	andi	r24, 0x80	; 128
-  ac:	84 b9       	out	0x04, r24	; 4
-		KEY_DDR |= 0b00000001 << r ;
-  ae:	24 b1       	in	r18, 0x04	; 4
+  ac:	8a b9       	out	0x0a, r24	; 10
+		KEY_DDR |= 0b00000001 << r ; // set the current pin as output
+  ae:	2a b1       	in	r18, 0x0a	; 10
   b0:	81 e0       	ldi	r24, 0x01	; 1
   b2:	90 e0       	ldi	r25, 0x00	; 0
   b4:	06 2e       	mov	r0, r22
@@ -117,12 +117,12 @@ char keyInput(){
   be:	e2 f7       	brpl	.-8      	; 0xb8 <_Z8keyInputv+0x22>
   c0:	92 2f       	mov	r25, r18
   c2:	98 2b       	or	r25, r24
-  c4:	94 b9       	out	0x04, r25	; 4
+  c4:	9a b9       	out	0x0a, r25	; 10
 		KEY_PORT &= ~(0b00000001 << r); // set the current row pin to LOW
-  c6:	95 b1       	in	r25, 0x05	; 5
+  c6:	9b b1       	in	r25, 0x0b	; 11
   c8:	80 95       	com	r24
   ca:	89 23       	and	r24, r25
-  cc:	85 b9       	out	0x05, r24	; 5
+  cc:	8b b9       	out	0x0b, r24	; 11
 		for (int c=0; c<=2; c++){
   ce:	20 e0       	ldi	r18, 0x00	; 0
   d0:	30 e0       	ldi	r19, 0x00	; 0
@@ -130,7 +130,7 @@ char keyInput(){
   d4:	31 05       	cpc	r19, r1
   d6:	6c f5       	brge	.+90     	; 0x132 <_Z8keyInputv+0x9c>
 			KEY_PORT |= (0b00010000 << c);
-  d8:	45 b1       	in	r20, 0x05	; 5
+  d8:	4b b1       	in	r20, 0x0b	; 11
   da:	80 e1       	ldi	r24, 0x10	; 16
   dc:	90 e0       	ldi	r25, 0x00	; 0
   de:	02 2e       	mov	r0, r18
@@ -140,9 +140,9 @@ char keyInput(){
   e6:	0a 94       	dec	r0
   e8:	e2 f7       	brpl	.-8      	; 0xe2 <_Z8keyInputv+0x4c>
   ea:	48 2b       	or	r20, r24
-  ec:	45 b9       	out	0x05, r20	; 5
+  ec:	4b b9       	out	0x0b, r20	; 11
 			if (!(KEY_PIN & (0b00010000 << c))){ // check each column in the respective row for a pressed key
-  ee:	43 b1       	in	r20, 0x03	; 3
+  ee:	49 b1       	in	r20, 0x09	; 9
   f0:	50 e0       	ldi	r21, 0x00	; 0
   f2:	84 23       	and	r24, r20
   f4:	95 23       	and	r25, r21
@@ -180,8 +180,8 @@ char keyInput(){
  12a:	08 95       	ret
 	KEY_PORT |= 0b00001111; //set all row pins to HIGH
 	for (int r=0; r<=3; r++){
-		KEY_DDR &= ~0b01111111;
-		KEY_DDR |= 0b00000001 << r ;
+		KEY_DDR &= ~0b01111111; // clear previous bit values
+		KEY_DDR |= 0b00000001 << r ; // set the current pin as output
 		KEY_PORT &= ~(0b00000001 << r); // set the current row pin to LOW
 		for (int c=0; c<=2; c++){
  12c:	2f 5f       	subi	r18, 0xFF	; 255
