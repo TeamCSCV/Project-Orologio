@@ -9,7 +9,7 @@
 #ifndef KEY_PAD_H_
 #define KEY_PAD_H_
 #include <avr/io.h>
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 
 
 //KEYPAD IS ATTACHED ON PORTB

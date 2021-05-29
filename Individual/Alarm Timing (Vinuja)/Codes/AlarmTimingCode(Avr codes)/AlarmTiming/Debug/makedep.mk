@@ -8,3 +8,5 @@ i2cmaster.cpp
 
 main.cpp
 
+Settings.cpp
+

@@ -14,8 +14,8 @@ char keyInput(){
 	
 	KEY_PORT |= 0b00001111; //set all row pins to HIGH
 	for (int r=0; r<=3; r++){
-		KEY_DDR &= ~0b01111111;
-		KEY_DDR |= 0b00000001 << r ;
+		KEY_DDR &= ~0b01111111; // clear previous bit values
+		KEY_DDR |= 0b00000001 << r ; // set the current pin as output
 		KEY_PORT &= ~(0b00000001 << r); // set the current row pin to LOW
 		for (int c=0; c<=2; c++){
 			KEY_PORT |= (0b00010000 << c);
