@@ -71,6 +71,14 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=TMALVRJS
 
+[GeneratedDocument1]
+DocumentPath=Project Outputs for AlarmTiming\Design Rule Check - AlarmTiming.html
+DItemRevisionGUID=
+
+[GeneratedDocument2]
+DocumentPath=D:\Altium Projects\AlarmTiming\Project Outputs for AlarmTiming\Design Rule Check - AlarmTiming.html
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
