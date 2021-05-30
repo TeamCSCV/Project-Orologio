@@ -1,7 +1,0 @@
-Tone   KEYWORD1
-melody1    KEYWORD2
-melody2    KEYWORD2
-melody3    KEYWORD2
-melody4    KEYWORD2
-melody5    KEYWORD2
-play1    KEYWORD2
