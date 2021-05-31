@@ -14,10 +14,10 @@
 class Screen                //objects I need under the class Screen
 {
 	public:
-	#define LCD_Dir DDRB
-	#define LCD_Port PORTB
-	#define RS PB0
-	#define EN PB1
+	#define LCD_Dir DDRD
+	#define LCD_Port PORTD
+	#define RS PD0
+	#define EN PD1
 	void LCD_Command(unsigned char cmnd);
 	void LCD_Char(unsigned char data);
 	void LCD_Init(void);
@@ -31,6 +31,20 @@ class Screen                //objects I need under the class Screen
 	void Left();
 	void Right();
 	int _state;
+	int _co;
+	void state_1();
+	void state_2();
+	void state_3();
+	void state_4();
+	void state_5();
+	void state_6();
+	void state_7();
+	void state_8();
+	void show();
+	char c_a ;
+	char c_b ;
+	char c_c ;
+	char c_d ;
 };
 
 #endif
