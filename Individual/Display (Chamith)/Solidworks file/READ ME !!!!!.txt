@@ -1,0 +1,2 @@
+* final_enclosure.SLDASM is the end product.
+* others are parts used for the assembly purposes.
