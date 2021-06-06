@@ -1,0 +1,16 @@
+Added Component: Designator=J?(JST-B2B-PH-K-S_V)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Datasheet URL"; Value = "http://datasheet.octopart.com/B2B-PH-K-S%28LF%29%28SN%29-JST-datasheet-8324864.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Version"; Value = "Nov-08"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "JST"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer URL"; Value = "http://www.jst.com/home2.html"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "No of Positions"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Style/Orientation"; Value = "StraightHeader/Plug"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Termination"; Value = "Crimp"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Type"; Value = "ShroudedHeader"; VariantName = "[No Variations]"
+Added Member To Class: ClassName=Sheet1 Member=Component J? B2B-PH-K-S(LF)(SN)
+Added Member To Class: ClassName=Sheet1 Member=Component P? B3B-PH-K-S(LF)(SN)
+Added Member To Class: ClassName=Sheet1 Member=Component SW? 1825910-2
+Added Member To Class: ClassName=Sheet1 Member=Component SW? 1825910-2
+Added Member To Class: ClassName=Sheet1 Member=Component SW? 1825910-2
