@@ -711,13 +711,13 @@ END GROUP
  .debug_frame   0x00000000       0x34 main.o
  .debug_frame   0x00000034      0x2e4 Tone.o
 
-.debug_str      0x00000000      0x60f
+.debug_str      0x00000000      0x61e
  *(.debug_str)
  .debug_str     0x00000000      0x208 D:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x319 main.o
-                                0x35c (size before relaxing)
- .debug_str     0x00000521       0xee Tone.o
-                                0x3d7 (size before relaxing)
+ .debug_str     0x00000208      0x328 main.o
+                                0x36b (size before relaxing)
+ .debug_str     0x00000530       0xee Tone.o
+                                0x3e6 (size before relaxing)
 
 .debug_loc      0x00000000     0x1cfe
  *(.debug_loc)
