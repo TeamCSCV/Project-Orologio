@@ -8,17 +8,16 @@
 class Tone
 {
     public:
-        Tone(int pin_1,int pin_2);
-        void melody1();
-        void melody2();
-        void melody3();
-        void melody4();
-        void melody5();
+        Tone(int pin_1);
+        char melody1();
+        char melody2();
+        char melody3();
+        char melody4();
+        char melody5();
         void playNote(float frequency, float duration);
-        void playMelody(int number);
+        char playMelody(int number);
     private:
         int SPEAKER_PIN;
-        int BUTTON_PIN;
 };
 
 #endif

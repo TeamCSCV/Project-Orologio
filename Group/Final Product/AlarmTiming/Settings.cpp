@@ -5,6 +5,10 @@
 * Author: vinuj
 */
 
+#define __DELAY_BACKWARD_COMPATIBLE__
+#ifndef F_CPU
+#define F_CPU 1000000UL
+#endif
 
 #include "Settings.h"
 #include "util/delay.h"
@@ -12,10 +16,9 @@
 #include "ds1307.h"
 #include "Screen.h"
 #include "Key_Pad.h"
+#include "Tone.h"
 
-#ifndef F_CPU
-#define F_CPU 1000000UL
-#endif
+Tone tone(3);
 
 Screen sc;
 Key_Pad kp;
@@ -31,6 +34,9 @@ Settings::~Settings()
 } //~Settings
 
 int alarmArray[5]={-1,-1,-1,-1,-1};
+int alarmToneArray[5]={-1,-1,-1,-1,-1};
+	
+	
 int monthsDays[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 uint8_t year = 0;
 uint8_t month = 0;
@@ -46,8 +52,8 @@ char se;
 int y, m, d, D, h, M, s;
 
 int menu_i = 0;
-char menu[4][16] = {"Set Alarm", "Set Time","Delete Alarms", "Factory Reset"};
-
+char menu[5][16] = {"Set Alarm", "Set Time","Delete Alarms", "Factory Reset","About us"};
+char toneName[5][16] = {"Tone 1","Tone 2","Tone 3","Tone 4","Tone 5"};
 int ith_alarm=0;
 
 int powerOf(int base, int power){
@@ -118,8 +124,10 @@ void setClockTime(){
 		sc.LCD_Command(0xc0);
 		sc.blink();
 		h = (int (kp.pressedKey())-48)*10;
+		if (h==410){return;}
 		sc.LCD_Char((char) (h/10)+48);
 		h += (int (kp.pressedKey()) -48);
+		if (h==451){return;}
 		sc.LCD_Char((char) (h%10)+48);
 		sc.stopBlink();
 		_delay_ms(250);
@@ -135,8 +143,10 @@ void setClockTime(){
 	while(1){
 		sc.blink();
 		M = (int (kp.pressedKey())-48)*10;
+		if (M==410){return;}
 		sc.LCD_Char((char) (M/10)+48);
 		M += (int (kp.pressedKey()) -48);
+		if (M==451){return;}
 		sc.LCD_Char((char) (M%10)+48);
 		_delay_ms(250);
 		sc.stopBlink();
@@ -163,8 +173,10 @@ void setClockTime(){
 
 	sc.blink();
 	int y = (int (kp.pressedKey())-48)*10;
+	if (y==410){return;}
 	sc.LCD_Char((char) (y/10)+48);
 	y += (int (kp.pressedKey()) -48);
+	if (h==451){return;}
 	sc.LCD_Char((char) (y%10)+48);
 	sc.stopBlink();
 	_delay_ms(250);
@@ -174,8 +186,10 @@ void setClockTime(){
 	while(1){
 		sc.blink();
 		m = (int (kp.pressedKey())-48)*10;
+		if (m==410){return;}
 		sc.LCD_Char((char) (m/10)+48);
 		m += (int (kp.pressedKey()) -48);
+		if (m==451){return;}
 		sc.LCD_Char((char) (m%10)+48);
 		_delay_ms(250);
 		sc.stopBlink();
@@ -194,8 +208,10 @@ void setClockTime(){
 	while(1){
 		sc.blink();
 		d = (int (kp.pressedKey())-48)*10;
+		if (d==410){return;}
 		sc.LCD_Char((char) (d/10)+48);
 		d += (int (kp.pressedKey()) -48);
+		if (d==451){return;}
 		sc.LCD_Char((char) (d%10)+48);
 		_delay_ms(250);
 		sc.stopBlink();
@@ -213,7 +229,7 @@ void setClockTime(){
 		
 }
 
-//-------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
 
 int getDay(int y, int m, int d){
 	int days = 0;
@@ -238,7 +254,7 @@ int getDay(int y, int m, int d){
 	return (days+d+5)%7;
 }
 
-//--------------------------------------------------------------------------------------------------- 
+//----------------------------------------------------------------------------------------------------------------------------------------------
 
 void set_alarm(){
 	if (ith_alarm==5){
@@ -255,18 +271,23 @@ void set_alarm(){
 	sc.LCD_Command (0x80);
 	sc.blink();
 	char p = kp.pressedKey();
+	if (p=='Y'){return;}
 	sc.LCD_Char(p);
 	char q = kp.pressedKey();
+	if (q=='Y'){return;}
 	sc.LCD_Char(q);
 	sc.LCD_String(" : ");
 	char r = kp.pressedKey();
+	if (r=='Y'){return;}
 	sc.LCD_Char(r);
 	char se = kp.pressedKey();
+	if (se=='Y'){return;}
 	sc.LCD_Char(se);
 	sc.stopBlink();
 	_delay_ms(2000);
 	
-	if (((int) p-48)*1000 + ((int) q-48)*100  + ((int) r-48)*10 + ((int) se-48) > 2359){
+	
+	if (((((int) p-48)*10 + ((int) q-48)> 23)) ||  ((((int) r-48)*10 + ((int) se-48)) > 59)){
 		sc.LCD_clear();
 		sc.LCD_String("ALARM NOT VALID!");
 		_delay_ms(1000);
@@ -275,27 +296,70 @@ void set_alarm(){
 	}
 	
 	 
-	alarmArray[ith_alarm] = ((int) p-48)*1000 + ((int) q-48)*100  + ((int) r-48)*10 + ((int) se-48);
-    ith_alarm+=1;
+	
+    
+	
 	sc.LCD_clear();
-	sc.LCD_String("AlARM SAVED :)");
+	sc.LCD_String("Select a tone");
 	_delay_ms(1000);
-	return;
+ 
+	int tone_number=0;
+	
+	sc.LCD_clear();
+	sc.LCD_String(toneName[tone_number]);
+	
+	while(1){
+		
+		char btn=tone.playMelody(tone_number);
+		
+		if (btn=='d'){
+			switch(tone_number)
+			{
+				case 4: tone_number = 0; break;
+				default: tone_number ++; break;
+			}
+		}
+		else if (btn=='u'){
+			switch (tone_number)
+			{
+				case 0: tone_number = 4; break;
+				default: tone_number --; break;
+			}
+		}
+		else if (btn=='b'){break;}
+			
+		else if (btn=='s'){	
+			alarmArray[ith_alarm] = ((int) p-48)*1000 + ((int) q-48)*100  + ((int) r-48)*10 + ((int) se-48);
+			alarmToneArray[ith_alarm]= tone_number;
+			sc.LCD_clear();
+			sc.LCD_String("AlARM SAVED :)");
+			_delay_ms(1000);
+			ith_alarm+=1;
+			
+			break;}
+			
+			sc.LCD_clear();
+			sc.LCD_String(toneName[tone_number]);
+
+		
+	}
 }
 
-//--------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 
 void deleteAlarm(){
 	int ith =0;
 	if (alarmArray[ith]==-1){
 		sc.LCD_clear();
+		sc.LCD_String("(");
 		sc.LCD_Char((char) ( ith+ 49));
-		sc.LCD_String(". NONE");
+		sc.LCD_String(") NONE");
 	}
 	else {
 		sc.LCD_clear();
+		sc.LCD_String("(");
 		sc.LCD_Char((char) ( ith+ 49));
-		sc.LCD_String(". ");
+		sc.LCD_String(") ");
 		int _hour=alarmArray[ith]/100;
 		int _minute=alarmArray[ith]%100;
 		
@@ -304,6 +368,10 @@ void deleteAlarm(){
 		sc.LCD_String(":");
 		sc.LCD_Char((char) (_minute/10)+48);
 		sc.LCD_Char((char) (_minute%10)+48);
+	
+			
+			
+		
 	}
 	
 	
@@ -326,15 +394,42 @@ void deleteAlarm(){
 			}
 		}
 		
+		else if (btn=='s'){
+				sc.LCD_clear();
+				sc.LCD_String("Are you sure?");
+				sc.LCD_Command(0xc0);
+				sc.LCD_String("Yes           No");
+				
+				while(1){
+					if (sc.pressedSelect()){
+						for (int al_num=ith ;al_num<4 ;al_num++){
+							alarmArray[al_num]=alarmArray[al_num+1];
+							alarmToneArray[al_num] = alarmToneArray[al_num+1];
+						}
+						alarmArray[4]=-1;
+						alarmToneArray[4]=-1;
+						ith_alarm--;
+						break;
+					}
+					else if(sc.pressedBack()){
+						break;
+					}
+				}
+		}
+		
+		else if (btn=='b'){break;}
+		
 		if (alarmArray[ith]==-1){
 			sc.LCD_clear();
+			sc.LCD_String("(");
 			sc.LCD_Char((char) ( ith+ 49));
-			sc.LCD_String(". NONE");
+			sc.LCD_String(") NONE");
 		}
 		else {
 			sc.LCD_clear();
+			sc.LCD_String("(");
 			sc.LCD_Char((char) ( ith+ 49));
-			sc.LCD_String(". ");
+			sc.LCD_String(") ");
 			int _hour=alarmArray[ith]/100;
 			int _minute=alarmArray[ith]%100;
 			
@@ -350,7 +445,7 @@ void deleteAlarm(){
 	}
 }
 
-//-----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 
 void factoryReset(){
 	sc.LCD_clear();
@@ -361,6 +456,7 @@ void factoryReset(){
 	while(1){
 		if (sc.pressedSelect()){
 			int alarmArray[5] ={-1,-1,-1,-1,-1};
+			int alarmToneArray[5] ={-1,-1,-1,-1,-1};
 			ds1307_setdate(00,01,01, 00,00,00,00);
 			sc.LCD_String("Please Wait");
 //This process is to be shown as a percentange			
@@ -396,6 +492,14 @@ void factoryReset(){
 		
 }
 
+void aboutUs(){
+	sc.LCD_clear();
+	sc.LCD_String("OROLOGIO");
+	_delay_ms(1000);
+}
+
+
+
 void moveCursorRight(int i){
 	for (int l=0; l<i;l++){
 		sc.LCD_Command(0x14);
@@ -420,14 +524,14 @@ void mainMenu()
 		if (btn=='d'){
 			switch(menu_i)
 			{
-				case 3: menu_i = 0; break;
+				case 4: menu_i = 0; break;
 				default: menu_i ++; break;
 			}
 		}
 		else if (btn=='u'){
 			switch (menu_i)
 			{
-				case 0: menu_i = 3; break;
+				case 0: menu_i = 4; break;
 				default: menu_i --; break;
 			}
 		}

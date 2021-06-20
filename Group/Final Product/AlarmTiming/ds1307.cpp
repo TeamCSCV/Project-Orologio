@@ -1,5 +1,9 @@
 #ifndef DS1307_H
 #define DS1307_H
+#define __DELAY_BACKWARD_COMPATIBLE__
+#ifndef F_CPU
+#define F_CPU 1000000UL
+#endif
 
 #include <avr/io.h>
 #include "ds1307.h"
@@ -7,9 +11,7 @@
 #include "util/delay.h"
 #define DS1307_ADDRESS 0xD0
 
-#ifndef F_CPU
-#define F_CPU 1000000UL
-#endif
+
 
 
 uint8_t ds1307_dec2bcd(uint8_t val) {

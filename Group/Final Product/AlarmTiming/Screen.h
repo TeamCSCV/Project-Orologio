@@ -24,6 +24,7 @@ class Screen                //objects I need under the class Screen
 	void LCD_String(char *str);
 	void LCD_clear();
 	char Control_buttons();
+	char pressedButton();
 
 	
 	void blink();
