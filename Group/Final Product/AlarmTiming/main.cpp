@@ -23,8 +23,11 @@ int main(void)
 	scrn.LCD_Init();
 	while (1)
 	{
+		
+		idle();
 		mainLoop();
 			
+	
 	}
 		
 	

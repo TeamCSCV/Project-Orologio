@@ -492,6 +492,38 @@ void factoryReset(){
 		
 }
 
+void checkAlarm(){
+	
+	ds1307_getdate(&year, &month, &day, &dayofweek, &hour, &minute, &second);
+	for (int _ith = 0; _ith <= 4;_ith++){
+		if (alarmArray[_ith]==-1){
+			break;}
+		
+		else if (alarmArray[_ith]/100 == hour && alarmArray[_ith]%100 == minute){
+			sc.LCD_clear();
+			sc.LCD_String("It's ");
+			sc.LCD_Char((char) (hour/10)+48);
+			sc.LCD_Char((char) (hour%10)+48);
+			sc.LCD_String(":");
+			sc.LCD_Char((char) (minute/10)+48);
+			sc.LCD_Char((char) (minute%10)+48);
+			tone.playMelody(alarmToneArray[_ith]);
+			sc.LCD_clear();
+			
+			for (int al_num=_ith ;al_num<4 ;al_num++){
+				alarmArray[al_num]=alarmArray[al_num+1];
+				alarmToneArray[al_num] = alarmToneArray[al_num+1];
+			}
+			alarmArray[4]=-1;
+			alarmToneArray[4]=-1;
+			ith_alarm--;
+			break;
+		}
+	}
+}
+
+
+
 void aboutUs(){
 	sc.LCD_clear();
 	sc.LCD_String("OROLOGIO");
@@ -572,8 +604,68 @@ void mainMenu()
 
 void mainLoop(){
 	showTime();
+	checkAlarm();
 	if (sc.pressedSelect()){
 		sc.LCD_clear();
 		mainMenu();
+}
+}
+
+
+void idle(){
+	while (1){
+	sc.LCD_clear();
+	sc.LCD_String("  O          O  ");
+	_delay_ms(1000);
+	if(sc.pressedSelect()	){
+		sc.LCD_clear();
+		sc.LCD_String("  O          -  ");
+		sc.LCD_Command(0xc0);
+		sc.LCD_String("        V       ");
+		_delay_ms(500);
+	return;}
+	sc.LCD_clear();
+	sc.LCD_String("  -          -  ");
+	_delay_ms(50);
+	sc.LCD_clear();
+	sc.LCD_String("  O          O  ");
+	_delay_ms(50);
+	sc.LCD_clear();
+	sc.LCD_String("  -          -  ");
+	_delay_ms(200);
+	sc.LCD_clear();
+	sc.LCD_String("  O          O  ");
+	_delay_ms(1000);
+	if(sc.pressedSelect()	){
+		sc.LCD_clear();
+		sc.LCD_String("  O          -  ");
+		sc.LCD_Command(0xc0);
+		sc.LCD_String("        V       ");
+		_delay_ms(500);
+	return;}
+	_delay_ms(1000);
+	if(sc.pressedSelect()	){
+		sc.LCD_clear();
+		sc.LCD_String("  O          -  ");
+		sc.LCD_Command(0xc0);
+		sc.LCD_String("        V       ");
+		_delay_ms(500);
+	return; }
+	_delay_ms(1000);
+	if(sc.pressedSelect()	){
+		sc.LCD_clear();
+		sc.LCD_String("  O          -  ");
+		sc.LCD_Command(0xc0);
+		sc.LCD_String("        V       ");
+		_delay_ms(500);
+	return; }
+	_delay_ms(1000);
+	if(sc.pressedSelect()	){
+		sc.LCD_clear();
+		sc.LCD_String("  O          -  ");
+		sc.LCD_Command(0xc0);
+		sc.LCD_String("        V       ");
+		_delay_ms(500);
+	return;	}
 }
 }
