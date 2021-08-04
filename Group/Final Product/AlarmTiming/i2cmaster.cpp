@@ -1,3 +1,9 @@
+#define __DELAY_BACKWARD_COMPATIBLE__
+
+#ifndef F_CPU
+#define F_CPU 1000000UL
+#endif
+
 
 #include <inttypes.h>
 #include <compat/twi.h>
@@ -6,9 +12,6 @@
 
 
 /* define CPU frequency in Mhz here if not defined in Makefile */
-#ifndef F_CPU
-#define F_CPU 1000000UL
-#endif
 
 /* I2C clock in Hz */
 #define SCL_CLOCK  100000L

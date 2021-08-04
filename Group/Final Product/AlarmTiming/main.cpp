@@ -1,4 +1,4 @@
-
+#define __DELAY_BACKWARD_COMPATIBLE__
 #define F_CPU 1000000UL
 
 #include <avr/io.h>
@@ -14,7 +14,7 @@
 
 Screen scrn;
 Key_Pad key;
-Tone alarmTone(3,4);
+Tone t(3);
 
 
 int main(void)
@@ -23,8 +23,11 @@ int main(void)
 	scrn.LCD_Init();
 	while (1)
 	{
+		
+		idle();
 		mainLoop();
 			
+	
 	}
 		
 	

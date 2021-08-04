@@ -18,13 +18,15 @@
 
 #include "Tone.h"
 #include "Notes.h"
+#include "Screen.h"
 
-int changing;
 
-Tone::Tone(int pin_1,int pin_2)
+Screen sc3;
+
+Tone::Tone(int pin_1)
 {
 	SPEAKER_PIN=pin_1;
-	BUTTON_PIN =pin_2;
+	
 }
 
 //Function to play a single note
@@ -64,8 +66,9 @@ void Tone:: playNote(float frequency, float duration)
 
 //Notes and their durations.
 
-void Tone::melody1()
-{
+char Tone::melody1()
+{  char state='0';
+	int changing=0;
 	int melody[] = {
 		NOTE_G5,NOTE_G5,NOTE_G5,NOTE_G5,0
 	};
@@ -76,15 +79,18 @@ void Tone::melody1()
 	
 	int length = sizeof(noteDurations)/sizeof(noteDurations[0]);
 
-	changing=0;
 	while (changing==0)
 	{
 		
 		for (int currentNote=0; currentNote<length;currentNote++)
 		{
-			int wantChange  = PINB & (1<<BUTTON_PIN);
-			if( wantChange) {changing=1;break;}
-
+			
+			state=sc3.pressedButton();
+			if (state !='0'){
+				changing=1;
+				break;
+			}
+			
 			float noteDuration = 200 / noteDurations[currentNote];
 			playNote(melody[currentNote],noteDuration);
 			float pauseBetweenNotes= noteDuration*2;
@@ -95,14 +101,18 @@ void Tone::melody1()
 	}
 
 	_delay_ms(400);
+	
+	return state;
 }
 
 
-void Tone:: melody2()
-{
+char Tone:: melody2()
+{  
+	
+	char state='0';
+	int changing=0;
 	
 	int melody[] = {
-		
 		NOTE_AS4, NOTE_AS4, NOTE_AS4, NOTE_AS4,
 		NOTE_D5, NOTE_D5, NOTE_D5, NOTE_D5,
 		NOTE_C5, NOTE_C5, NOTE_C5, NOTE_C5,
@@ -123,14 +133,13 @@ void Tone:: melody2()
 		NOTE_C5, 0, NOTE_AS4, 0,
 		NOTE_A4, 0, NOTE_A4, NOTE_A4,
 		NOTE_C5, 0, NOTE_AS4, NOTE_A4,
-		NOTE_G4,0, NOTE_G4, NOTE_AS5,
+		/*NOTE_G4,0, NOTE_G4, NOTE_AS5,
 		NOTE_A5, NOTE_AS5, NOTE_A5, NOTE_AS5,
 		NOTE_G4,0, NOTE_G4, NOTE_AS5,
-		NOTE_A5, NOTE_AS5, NOTE_A5, NOTE_AS5
-	};
-
+		NOTE_A5, NOTE_AS5, NOTE_A5, NOTE_AS5*/ };
+		
+  
 	int noteDurations[] = {
-
 		4,4,4,4,
 		4,4,4,4,
 		4,4,4,4,
@@ -151,22 +160,22 @@ void Tone:: melody2()
 		4,4,4,4,
 		4,4,4,4,
 		4,4,4,4,
+		/*4,4,4,4,
 		4,4,4,4,
 		4,4,4,4,
-		4,4,4,4,
-		4,4,4,4,
-	};
-	
+		4,4,4,4*/};
+		
 	int length = sizeof(noteDurations)/sizeof(noteDurations[0]);
 	
-	changing=0;
 	while (changing==0)
-	{
-		
+	{	
 		for (int currentNote=0; currentNote<length;currentNote++)
-		{
-			int wantChange  = PINB & (1<<BUTTON_PIN);
-			if( wantChange) {changing=1;_delay_ms(100);break;}
+		{   
+			state=sc3.pressedButton();
+			if (state !='0'){
+				changing=1;
+				break;
+			}
 
 			float noteDuration = 375 / noteDurations[currentNote];
 			playNote(melody[currentNote],noteDuration);
@@ -174,14 +183,16 @@ void Tone:: melody2()
 			_delay_ms (pauseBetweenNotes);
 			SPEAKER_PORT=0;
 		}
-		_delay_ms(400);
+		
 		
 	}
-
+	_delay_ms(400);
+	return state;
 }
 
-void Tone:: melody3()
-{
+char Tone:: melody3()
+{   char state='0';
+	int changing=0;
 	int melody[] = {
 		
 		NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0,
@@ -192,14 +203,14 @@ void Tone:: melody3()
 		NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0,
 		NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
 		NOTE_A4, NOTE_G4, NOTE_A4,
-		NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0,
+	/*  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0,
 		NOTE_A4, NOTE_C5, NOTE_D5, NOTE_D5, 0,
 		NOTE_D5, NOTE_E5, NOTE_F5, NOTE_F5, 0,
 		NOTE_E5, NOTE_D5, NOTE_E5, NOTE_A4, 0,
 		NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0,
 		NOTE_D5, NOTE_E5, NOTE_A4, 0,
 		NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, 0,
-		NOTE_C5, NOTE_A4, NOTE_B4,
+		NOTE_C5, NOTE_A4, NOTE_B4, */
 	};
 
 	int noteDurations[] = {
@@ -212,39 +223,45 @@ void Tone:: melody3()
 		8, 8, 4, 8, 8,
 		8, 8, 4, 8, 8,
 		8, 8, 2,
-		8, 8, 4, 8, 8,
+	/*	8, 8, 4, 8, 8,
 		8, 8, 4, 8, 8,
 		8, 8, 4, 8, 8,
 		8, 8, 8, 4, 8,
 		8, 8, 4, 8, 8,
 		4, 8, 4, 8,
 		8, 8, 4, 8, 8,
-		8, 8, 2
+		8, 8, 2 */
 	};
 	
 	int length = sizeof(noteDurations)/sizeof(noteDurations[0]);
 	
 
-	changing=0;
 	while (changing==0)
-	{
+	{ 
 		for (int currentNote=0; currentNote<length;currentNote++)
 		{
-			int wantChange  = PINB & (1<<BUTTON_PIN);
-			if( wantChange) {changing=1;_delay_ms(100);break;}
-
+			state=sc3.pressedButton();
+			if (state !='0'){
+				changing=1;
+				break;
+			}
+			
 			float noteDuration = 375 / noteDurations[currentNote];
 			playNote(melody[currentNote],noteDuration);
 			float pauseBetweenNotes= noteDuration*1.30;
 			_delay_ms (pauseBetweenNotes);
 			SPEAKER_PORT=0;
 		}
-		_delay_ms(400);
+		
 	}
+	
+	_delay_ms(400);
+	return state;
 }
 
-void Tone:: melody4()
-{
+char Tone:: melody4()
+{   char state='0';
+	int changing=0;
 	int melody[] = {
 		NOTE_G4,
 		NOTE_C4,NOTE_DS4,NOTE_F4,NOTE_G4,
@@ -252,7 +269,7 @@ void Tone:: melody4()
 		NOTE_C4,NOTE_DS4,NOTE_F4,NOTE_G4,
 		NOTE_C4,NOTE_DS4,NOTE_F4,NOTE_G4,
 		NOTE_C4,NOTE_E4,NOTE_F4,NOTE_G4,
-		NOTE_C4,NOTE_E4,NOTE_F4,NOTE_G4,
+		/* NOTE_C4,NOTE_E4,NOTE_F4,NOTE_G4,
 		NOTE_C4,NOTE_E4,NOTE_F4,NOTE_G4,
 		NOTE_C4,NOTE_E4,NOTE_F4,NOTE_G4,
 		NOTE_C4,NOTE_DS4,NOTE_F4,NOTE_G4,
@@ -277,7 +294,7 @@ void Tone:: melody4()
 		NOTE_GS3,NOTE_F3,NOTE_GS3,NOTE_G3,
 		NOTE_C4,NOTE_F3,NOTE_GS3,NOTE_G3,
 		NOTE_GS3,NOTE_F3,NOTE_GS3,NOTE_G3,
-		NOTE_C4,NOTE_F3
+		NOTE_C4,NOTE_F3 */
 	};
 
 	int noteDurations[] = {
@@ -286,7 +303,7 @@ void Tone:: melody4()
 		12,12,24,24,
 		12,12,24,24,
 		12,12,24,24,
-		12,12,24,24,
+		12,/*12,24,24,
 		12,12,24,24,
 		12,12,24,24,
 		4,4,24,24,
@@ -300,34 +317,38 @@ void Tone:: melody4()
 		12,24,24,12,
 		12,24,24,12,
 		12,24,24,12,
-		12
+		12*/
 	};
 	
 	int length = sizeof(noteDurations)/sizeof(noteDurations[0]);
 	
-	changing=0;
 	while (changing==0)
 	{
 		
 		for (int currentNote=0; currentNote<length;currentNote++)
 		{
-			int wantChange  = PINB & (1<<BUTTON_PIN);
-			if( wantChange) {changing=1;_delay_ms(100);break;}
-
-
+			state=sc3.pressedButton();
+			if (state !='0'){
+				changing=1;
+				break;
+			}
+			
 			float noteDuration = 1375 / noteDurations[currentNote];
 			playNote(melody[currentNote],noteDuration);
 			float pauseBetweenNotes= noteDuration*1.30;
 			_delay_ms (pauseBetweenNotes);
 			SPEAKER_PORT=0;
 		}
-		_delay_ms(1000);
+		
 	}
+	
+	return state;
 }
 
 
-void Tone:: melody5()
-{
+char Tone:: melody5()
+{  char state='0';
+	int changing=0;
 	int melody[] = {
 		NOTE_C4,NOTE_G4,
 		NOTE_G4,NOTE_FS4,NOTE_G4,NOTE_GS4,
@@ -337,7 +358,7 @@ void Tone:: melody5()
 		NOTE_DS5,NOTE_G5,NOTE_C5,NOTE_C5,
 		NOTE_D5,NOTE_DS5,NOTE_D5,NOTE_C5,
 		NOTE_F5,NOTE_C5,0,0,
-		0,NOTE_C5,NOTE_D5,NOTE_DS5,
+	/*	0,NOTE_C5,NOTE_D5,NOTE_DS5,
 		NOTE_DS5,NOTE_F5,NOTE_D5,NOTE_D5,
 		NOTE_DS5,NOTE_C5,NOTE_C5,NOTE_D5,
 		NOTE_B4,NOTE_GS4,NOTE_G4,NOTE_C5,0,
@@ -347,7 +368,7 @@ void Tone:: melody5()
 		0,NOTE_C5,NOTE_D5,NOTE_DS5,
 		NOTE_DS5,NOTE_F5,NOTE_D5,NOTE_D5,
 		NOTE_DS5,NOTE_C5,NOTE_C5,NOTE_D5,
-		NOTE_B4,NOTE_GS4,NOTE_G4,NOTE_C5
+		NOTE_B4,NOTE_GS4,NOTE_G4,NOTE_C5 */
 		
 	};
 	
@@ -362,7 +383,7 @@ void Tone:: melody5()
 		3,12,6,12,
 		12,12,12,12,
 		12,12,6,6,
-		12,24,24,12,
+		/*12,24,24,12,
 		24,24,12,24,
 		24,12,24,24,
 		12,24,24,3,3,
@@ -372,19 +393,20 @@ void Tone:: melody5()
 		12,24,24,12,
 		24,24,12,24,
 		24,12,24,24,
-		12,24,24,3
+		12,24,24,3*/
 	};
 	
 	int length = sizeof(noteDurations)/sizeof(noteDurations[0]);
 
-	changing=0;
 	while (changing==0)
 	{
 			for (int currentNote=0; currentNote<length;currentNote++)
 			{
-				int wantChange  = PINB & (1<<BUTTON_PIN);
-				if( wantChange) {changing=1;_delay_ms(100);break;}
-
+				state=sc3.pressedButton();
+				if (state !='0'){
+					changing=1;
+					break;
+				}
 				
 				float noteDuration = 375*3 / noteDurations[currentNote];
 				playNote(melody[currentNote],noteDuration);
@@ -393,28 +415,30 @@ void Tone:: melody5()
 				SPEAKER_PORT=0;
 			}
 			
-		_delay_ms(400);
+		
 	}
+	_delay_ms(400);
+	return state;
 }
 
-void Tone:: playMelody(int number){
-
+char Tone:: playMelody(int number){
+char _btn ='0';
 	switch (number) {
+		case 0:
+		_btn = melody1();
+		break;
 		case 1:
-		melody1();
+		_btn = melody2();
 		break;
 		case 2:
-		melody2();
+		_btn = melody3();
 		break;
 		case 3:
-		melody3();
+		_btn = melody4();
 		break;
 		case 4:
-		melody4();
-		break;
-		case 5:
-		melody5();
+		_btn = melody5();
 		break;
 	}
-
+	return _btn;
 }

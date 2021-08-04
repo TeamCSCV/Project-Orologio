@@ -43,6 +43,8 @@ extern void deleteAlarm();
 extern void factoryReset();
 extern void mainMenu();
 extern void mainLoop();
+extern void checkAlarm();
+extern void idle();
 extern void moveCursorRight(int i);
 extern void moveCursorLeft(int j);
 #endif //__SETTINGS_H__

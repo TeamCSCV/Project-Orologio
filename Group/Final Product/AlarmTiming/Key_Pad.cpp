@@ -4,10 +4,12 @@
  * Created: 2021-04-20 8:39:10 PM
  * Author : Senuri Ranatunga
  */
-#include <util/delay.h> 
+
 
 #define __DELAY_BACKWARD_COMPATIBLE__
 #define F_CPU 1000000UL
+
+#include <util/delay.h> 
 
 #include "Key_Pad.h"
 #include "Screen.h" 
@@ -23,8 +25,7 @@ char Key_Pad :: keyInput(){
 		if (sc2.pressedBack()){
 			sc2.stopBlink();
 			sc2.LCD_clear();
-			mainMenu();
-
+			return 'Y';
 		}
 		KEYROW_PORT |= 0b00001111; //set all row pins to HIGH
 		for (int r=0; r<=3; r++){

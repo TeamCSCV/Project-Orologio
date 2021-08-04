@@ -5,14 +5,15 @@
  *  Author: Chamith Ranathunga
  *  .cpp file for the library screen
  */ 
-
+#define __DELAY_BACKWARD_COMPATIBLE__
+#define F_CPU 1000000UL
 
 #include <avr/io.h>              //#include the header files I want
 #include <util/delay.h>
 #include "Screen.h"           
 
 
-#define F_CPU 1000000UL
+
 
 #define LCD_Dir DDRD           //defines some variables that the code using
 #define LCD_Port PORTD
@@ -131,6 +132,32 @@ char Screen::Control_buttons(){
 	}
 	
 }
+
+char Screen::pressedButton(){
+	DDRB = 0xCF;
+	DDRD &= 0b11110011;
+		if (PINB & 0b00010000){
+			_delay_ms(1500);
+			return 's' ;
+		}
+		else if (PINB & 0b00100000){
+			_delay_ms(1500);
+			return 'b';
+		}
+		else if (PIND & 0b000000100){
+			_delay_ms(1500);
+			return 'u';
+		}
+		else if (PIND & 0b000001000){
+			_delay_ms(1500);
+			return 'd';
+		}
+		else{
+			return '0';
+		}
+	
+}
+
 
 
 void Screen::blink(){
