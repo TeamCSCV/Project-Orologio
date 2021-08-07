@@ -526,8 +526,24 @@ void checkAlarm(){
 
 void aboutUs(){
 	sc.LCD_clear();
-	sc.LCD_String("OROLOGIO");
+	typewriter("TEAM OROLOGIO");
+	sc.LCD_Command(0XC0);
+	typewriter("Version 1.0");
 	_delay_ms(1000);
+	sc.LCD_clear();
+	typewriter("Chathushka");
+	_delay_ms(1000);
+	sc.LCD_clear();
+	typewriter("Methma");
+	_delay_ms(1000);
+	sc.LCD_clear();
+	typewriter("Chamith");
+	_delay_ms(1000);
+	sc.LCD_clear();
+	typewriter("Vinuja");
+	_delay_ms(1000);
+	sc.LCD_clear();
+		
 }
 
 
@@ -585,8 +601,13 @@ void mainMenu()
 				case 2:
 				deleteAlarm();
 				break;
+				
 				case 3:
 				factoryReset();
+				break;
+				
+				case 4:
+				aboutUs();
 				break;
 				
 			}
@@ -668,4 +689,13 @@ void idle(){
 		_delay_ms(500);
 	return;	}
 }
+}
+
+void typewriter(char *str){
+	int l;
+	for(l=0;str[l]!=0;l++)
+	{
+		sc.LCD_Char(str[l]);
+		_delay_ms(100);
+	}
 }
