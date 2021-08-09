@@ -1,0 +1,58 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\Chathushka\Desktop\PCB_Project - Copy\PCB_Project - Copy\Clock PCB.PcbDoc
+Date     : 6/20/2021
+Time     : 6:58:46 PM
+
+Processing Rule : Clearance Constraint (Gap=0.6mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+Rule Violations :0
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=0.254mm) (Max=1mm) (Preferred=0.6mm) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=0.025mm) (Max=4.5mm) (All)
+Rule Violations :0
+
+Processing Rule : Hole To Hole Clearance (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=0.2mm) (IsPad),(All)
+Rule Violations :0
+
+Processing Rule : Silk to Silk (Clearance=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mm) (All)
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)
+Rule Violations :0
+
+Waived Violations Of Rule : Clearance Constraint (Gap=0.6mm) (All),(All)
+   Waived Violation between Clearance Constraint: (0.22mm < 0.254mm) Between Pad Q1-1(72.2mm,51.88mm) on Multi-Layer And Pad Q1-2(72.2mm,53.15mm) on Multi-Layer Waived by Senuri at 6/16/2021 11:07:12 PMManufacturer's Value
+   Waived Violation between Clearance Constraint: (0.22mm < 0.254mm) Between Pad Q1-2(72.2mm,53.15mm) on Multi-Layer And Pad Q1-3(72.2mm,54.42mm) on Multi-Layer Waived by Senuri at 6/16/2021 11:07:12 PMManufacturer's Value
+Waived Violations :2
+
+Waived Violations Of Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
+   Waived Violation between Minimum Solder Mask Sliver Constraint: (0.017mm < 0.254mm) Between Pad Q1-1(72.2mm,51.88mm) on Multi-Layer And Pad Q1-2(72.2mm,53.15mm) on Multi-Layer [Top Solder] Mask Sliver [0.017mm] / [Bottom Solder] Mask Sliver [0.017mm]Waived by Senuri Ranatunga at 6/10/2021 12:27:02 AMDefault values of the components
+   Waived Violation between Minimum Solder Mask Sliver Constraint: (0.017mm < 0.254mm) Between Pad Q1-2(72.2mm,53.15mm) on Multi-Layer And Pad Q1-3(72.2mm,54.42mm) on Multi-Layer [Top Solder] Mask Sliver [0.017mm] / [Bottom Solder] Mask Sliver [0.017mm]Waived by Senuri Ranatunga at 6/10/2021 12:27:02 AMDefault values of the components
+Waived Violations :2
+
+
+Violations Detected : 0
+Waived Violations : 4
+Time Elapsed        : 00:00:01
